@@ -10,18 +10,6 @@
     stdenv.mkDerivation (rec {
         version = "5.9";
 
-        src = lib.fileset.toSource {
-          root = ./.;
-          fileset =
-            lib.fileset.difference
-            ./.
-            (lib.fileset.unions [
-              ./flake.nix
-              ./flake.lock
-              ./default.nix
-            ]);
-        };
-
         nativeBuildInputs = [
           gfortran13
         ];
@@ -33,6 +21,17 @@
       // args);
   library = build {
     pname = "slicot-reference-library";
+
+    src = lib.fileset.toSource {
+      root = ./.;
+      fileset = lib.fileset.unions [
+        ./makefile_Unix
+        ./make_Unix.inc
+        ./src
+        ./src_aux
+      ];
+    };
+
     buildFlags = ["lib"];
 
     installPhase = ''
@@ -43,6 +42,16 @@
   };
   examples = build {
     pname = "slicot-reference-examples";
+
+    src = lib.fileset.toSource {
+      root = ./.;
+      fileset = lib.fileset.unions [
+        ./makefile_Unix
+        ./make_Unix.inc
+        ./examples
+      ];
+    };
+
     buildFlags = ["example"];
 
     installPhase = ''
