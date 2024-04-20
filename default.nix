@@ -1,24 +1,26 @@
 {
   lib,
-  stdenv,
+  stdenvNoCC,
   gfortran13,
   blas,
   lapack,
   runCommandNoCC,
-}: let
-  build = args:
-    stdenv.mkDerivation (rec {
+}:
+let
+  build =
+    args:
+    stdenvNoCC.mkDerivation (
+      {
         version = "5.9";
 
-        nativeBuildInputs = [
-          gfortran13
-        ];
+        nativeBuildInputs = [ gfortran13 ];
 
         enableParallelBuilding = true;
 
         makefile = "makefile_Unix";
       }
-      // args);
+      // args
+    );
   library = build {
     pname = "slicot-reference-library";
 
@@ -32,7 +34,7 @@
       ];
     };
 
-    buildFlags = ["lib"];
+    buildFlags = [ "lib" ];
 
     installPhase = ''
       mkdir -p $out
@@ -52,7 +54,7 @@
       ];
     };
 
-    buildFlags = ["example"];
+    buildFlags = [ "example" ];
 
     patches = [
       ./lsame-fix.patch
@@ -72,8 +74,7 @@
     ];
   };
 in
-  runCommandNoCC
-  "slicot-reference"
+runCommandNoCC "slicot-reference"
   {
     outputs = [
       "out"
