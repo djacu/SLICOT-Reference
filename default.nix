@@ -54,6 +54,11 @@
 
     buildFlags = ["example"];
 
+    patches = [
+      ./lsame-fix.patch
+      ./remove-all-bad-examples.patch
+    ];
+
     installPhase = ''
       mkdir -p $out
       cp examples/*.exa $out/

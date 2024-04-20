@@ -1,0 +1,13 @@
+diff --git a/examples/TMB03LD.f b/examples/TMB03LD.f
+index b20b14a..9d46cd3 100644
+--- a/examples/TMB03LD.f
++++ b/examples/TMB03LD.f
+@@ -28,6 +28,8 @@
+ *
+ *     .. External Subroutines ..
+       EXTERNAL           MB03LD
++      LOGICAL            LSAME
++      EXTERNAL           LSAME
+ *
+ *     .. Intrinsic Functions ..
+       INTRINSIC          MAX
