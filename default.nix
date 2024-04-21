@@ -77,22 +77,26 @@ in
 runCommandNoCC "slicot-reference"
   {
     outputs = [
-      "out"
+      "lib"
       "examples"
+      "out"
     ];
 
     meta = with lib; {
       description = "SLICOT - A Fortran subroutines library for systems and control";
       homepage = "https://github.com/SLICOT/SLICOT-Reference";
       license = licenses.bsd3;
-      mainProgram = "slicot-reference";
       platforms = platforms.all;
+      outputsToInstall = [ "lib" ];
     };
   }
   ''
+    mkdir -p $lib
+    cp ${library}/slicot.a $lib/
+    cp ${library}/lpkaux.a $lib/
+    mkdir -p $examples
+    cp ${examples}/*.exa $examples/
     mkdir -p $out
     cp ${library}/slicot.a $out/
     cp ${library}/lpkaux.a $out/
-    mkdir -p $examples
-    cp ${examples}/*.exa $examples/
   ''
